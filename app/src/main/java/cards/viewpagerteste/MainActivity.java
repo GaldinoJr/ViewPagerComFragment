@@ -1,5 +1,6 @@
 package cards.viewpagerteste;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import cards.viewpagerteste.Pager.CustomHackyViewPager;
 public class MainActivity extends AppCompatActivity
 {
     //private RecyclerView rvItens;
-    private List<String> mListItens;
+    private List<Fragment> mListFraments;
     private ViewPager mPager;
     private CirclePageIndicator mIndicator;
     @Override
@@ -36,24 +37,21 @@ public class MainActivity extends AppCompatActivity
 
     private void carregarControles()
     {
-        mListItens = new LinkedList<>();
-        String mItem = "Linha ";
-        for (int i = 0; i < 10; i++)
-        {
-            mItem = "Linha " + Integer.toString(i);
-            mListItens.add(mItem);
-        }
+
     }
 
     private void populateViewPager()
     {
         //if(mFragments != null) {
-            BasePreviewDetailPagerAdapter adapter = new BasePreviewDetailPagerAdapter(getSupportFragmentManager(), mListItens, 4);
-            mPager.setAdapter(adapter);
-            mPager.setOffscreenPageLimit(2); // TODO Carregar paginas a mais
+        BasePreviewDetailPagerAdapter.TYPE_FRAGMENT[] typeFragment = {
+                BasePreviewDetailPagerAdapter.TYPE_FRAGMENT.TYPE2,
+                BasePreviewDetailPagerAdapter.TYPE_FRAGMENT.TYPE1
+        };
+        BasePreviewDetailPagerAdapter adapter = new BasePreviewDetailPagerAdapter(getSupportFragmentManager(), typeFragment);
+        mPager.setAdapter(adapter);
 
-            mIndicator.setViewPager(mPager);
-            mIndicator.setCurrentItem(0);
+        mIndicator.setViewPager(mPager);
+        mIndicator.setCurrentItem(0);
         //}
     }
 }

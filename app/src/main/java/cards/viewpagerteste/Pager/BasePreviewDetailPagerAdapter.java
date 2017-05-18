@@ -6,44 +6,52 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import cards.viewpagerteste.FragmentPager;
+import cards.viewpagerteste.Fragments.Fragment1;
+import cards.viewpagerteste.Fragments.Fragment2;
 
 /**
  * Created by galdino on 27/04/2017.
  */
 
-public class BasePreviewDetailPagerAdapter extends FragmentPagerAdapter {
+public class BasePreviewDetailPagerAdapter extends FragmentPagerAdapter
+{
+    private final TYPE_FRAGMENT[] mTypeFragments;
 
-    private final int mNrCelulas;
-    private List<String> mTexts;
-
-    public BasePreviewDetailPagerAdapter(FragmentManager fm, List<String> mText, int nrCelulas) {
-        super(fm);
-        mTexts = mText;
-        mNrCelulas = nrCelulas;
+    public enum TYPE_FRAGMENT {
+        TYPE1, TYPE2
     }
 
-//    @Override
-//    public Fragment getItem(int position) {
-//        return mTexts.get(position);
-//    }
-
-    @Override
-    public int getCount() {
-        double count = (double) mTexts.size() / (double)mNrCelulas;
-        return (int) Math.ceil(count);
+    public BasePreviewDetailPagerAdapter(FragmentManager fm, TYPE_FRAGMENT[] typeFragments) {
+        super(fm);
+        mTypeFragments = typeFragments;
     }
 
     @Override
     public Fragment getItem(int position)
     {
-        int index = position * mNrCelulas;
-        int indexFinal = index + mNrCelulas;
-        if (indexFinal >= mTexts.size()) {
-            indexFinal = mTexts.size() - 1;
+        TYPE_FRAGMENT typeFragment = mTypeFragments[position];
+        if (typeFragment == TYPE_FRAGMENT.TYPE1) {
+            return new Fragment1();
+        } else {
+            return new Fragment2();
         }
-
-        List<String> list = mTexts.subList(index, indexFinal);
-        return FragmentPager.newInstance(list);
     }
+
+    @Override
+    public int getCount() {
+        return mTypeFragments.length;
+    }
+
+//    @Override
+//    public Fragment getItem(int position)
+//    {
+//        int index = position * mNrCelulas;
+//        int indexFinal = index + mNrCelulas;
+//        if (indexFinal >= mFragments.size()) {
+//            indexFinal = mFragments.size() - 1;
+//        }
+//
+//        List<String> list = mFragments.subList(index, indexFinal);
+//        return mFragments.get(position);
+//    }
 }
